@@ -8,7 +8,7 @@
 
 
 使用技術:
-資料庫:MySQL8
-後端:JAVA JDK17 springboot3 spring data JPA 
-前端:Vue3 boostrap5
-第三方API:googleMaps API,ECpay
+  資料庫:MySQL8
+  後端:JAVA JDK17 springboot3 spring data JPA 
+  前端:Vue3 boostrap5
+  第三方API:googleMaps API,ECpay
