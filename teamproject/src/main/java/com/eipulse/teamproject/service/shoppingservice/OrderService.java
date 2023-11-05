@@ -4,12 +4,12 @@ package com.eipulse.teamproject.service.shoppingservice;
 import com.eipulse.teamproject.dto.shoppingdto.CartDTO;
 import com.eipulse.teamproject.dto.shoppingdto.OrderDTO;
 import com.eipulse.teamproject.dto.shoppingdto.ProductDTO;
-import com.eipulse.teamproject.entity.Employee;
+import com.eipulse.teamproject.entity.employee.Employee;
 import com.eipulse.teamproject.entity.shoppingentity.Cart;
 import com.eipulse.teamproject.entity.shoppingentity.CartItem;
 import com.eipulse.teamproject.entity.shoppingentity.Order;
 import com.eipulse.teamproject.entity.shoppingentity.OrderItem;
-import com.eipulse.teamproject.repository.EmpRepository;
+import com.eipulse.teamproject.repository.employeerepository.EmployeeRepository;
 import com.eipulse.teamproject.repository.shoppingrepository.CartRepository;
 import com.eipulse.teamproject.repository.shoppingrepository.OrderRepository;
 import ecpay.payment.integration.AllInOne;
@@ -29,13 +29,13 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     private CartRepository cartRepository;
-    private EmpRepository empRepository;
+    private EmployeeRepository empRepository;
     private ProductService productService;
     final static String   MERCHANT ="2000132";
 
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, CartRepository cartRepository, EmpRepository empRepository, ProductService productService) {
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository, EmployeeRepository empRepository, ProductService productService) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.empRepository = empRepository;
@@ -61,7 +61,6 @@ public class OrderService {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setProduct(cartItem.getProduct());
-            orderItem.setPrice(cartItem.getProduct().getPrice());
             orderItem.setQuantity(cartItem.getQuantity());
             orderItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
 
@@ -130,8 +129,6 @@ public class OrderService {
         String tradeNo  = orderTrade+order.getOrderId()+((int)Math.random()*100);
         aioCheckOutOneTime.setMerchantTradeNo(tradeNo);
 
-
-
         //設定訂單日期
         DateTimeFormatter dateTimeFormatter  =DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         String orderDate = localDateTime.format(dateTimeFormatter);
@@ -161,7 +158,7 @@ public class OrderService {
         aioCheckOutOneTime.setNeedExtraPaidInfo("Y");
         aioCheckOutOneTime.setRedeem("Y");
         //跳轉至綠界完成畫面由按鈕跳回頁面
-        aioCheckOutOneTime.setClientBackURL("http://localhost:5173/#/mall");
+        aioCheckOutOneTime.setClientBackURL("http://localhost:5173/mall/order");
 
         //呼叫綠界支付頁面，將回傳form表單至前端
         String form =  allInOne.aioCheckOut(aioCheckOutOneTime,null);

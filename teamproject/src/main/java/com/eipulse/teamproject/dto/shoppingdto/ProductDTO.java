@@ -1,12 +1,19 @@
 package com.eipulse.teamproject.dto.shoppingdto;
 
 
+import com.eipulse.teamproject.entity.shoppingentity.Product;
+import com.eipulse.teamproject.entity.shoppingentity.ProductType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 public class ProductDTO {
+    private String productTypeName;
+    private String subTypeName;
     private Integer id;
     private String productName;
     private Integer subTypeId;
@@ -15,6 +22,9 @@ public class ProductDTO {
     private Integer stockQuantity;
     private String imageUrl;
     private String status;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedAt;
+
 
     public ProductDTO() {
     }
@@ -68,7 +78,22 @@ public class ProductDTO {
         this.status = status;
     }
 
+    public ProductDTO(Product product) {
+        this.productTypeName = product.getSubType().getProductType().getTypeName();
+        this.subTypeName = product.getSubType().getSubName();
+        this.id = product.getId();
+        this.productName = product.getProductName();
+        this.subTypeId = product.getSubType().getId();
+        this.description = product.getDescription();
+        this.price = product.getPrice();
+        this.stockQuantity = product.getStockQuantity();
+        this.imageUrl = product.getImageUrl();
+        this.status = product.getStatus();
+        this.updatedAt = product.getUpdatedAt();
+    }
+
     public ProductDTO(Integer id) {
         this.id = id;
     }
+
 }

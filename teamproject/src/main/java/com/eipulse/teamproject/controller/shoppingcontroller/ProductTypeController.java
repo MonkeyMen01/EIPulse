@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-// 10/6 CRUD OK
 @RestController
 public class ProductTypeController {
     private ProductTypeService productTypeService;
@@ -53,12 +52,7 @@ public class ProductTypeController {
 
     @GetMapping("/productTypes")
     public ResponseEntity<?> getProductTypes(){
-        try {
-            List<ProductType> productTypes = productTypeService.findAllProductType();
-            return new ResponseEntity<>(productTypes, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-        }
+            return new ResponseEntity<>(productTypeService.findAllProductType(), HttpStatus.OK);
     }
     @PutMapping("/productType")
     public ResponseEntity<?>putProductType(@RequestBody ProductType productType){

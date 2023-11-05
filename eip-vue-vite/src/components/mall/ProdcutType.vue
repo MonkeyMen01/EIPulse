@@ -1,3 +1,33 @@
+<template>
+  <window-modal @submit="saveType" class="modal-m" titleName="新增類別" >
+<!--    子類別新增-->
+    <form  v-if="isChangeSub">
+      <div class="col">
+        <div class="form-floating mb-3">
+          <select class="form-control" v-model="selectType">
+            <option value="" disabled>選擇主類別</option>
+            <option v-for="type in productTypes" :value="type.id" :key="type.id">{{type.typeName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input v-model="subTypeName" type="text" class="form-control"  placeholder="子類別名稱">
+        <label for="productName">子類別名稱</label>
+      </div>
+    </form>
+
+    <!--    主類別新增-->
+    <form v-else>
+      <div class="form-floating mb-3">
+        <input v-model="typeName" type="text" class="form-control"  placeholder="主類別名稱">
+        <label for="productName">主類別名稱</label>
+      </div>
+    </form>
+    <div class="row mb-4">
+      <button @click.prevent="changeSubType" class="btn btn-outline-primary ">{{typeChangeButton}}</button>
+    </div>
+  </window-modal>
+</template>
 <script setup>
 
 import WindowModal from "./WindowModal.vue";
@@ -72,36 +102,7 @@ const changeSubType =()=>{
 }
 </script>
 
-<template>
-  <window-modal @submit="saveType" class="modal-m" titleName="新增類別" >
-<!--    子類別新增-->
-    <form  v-if="isChangeSub">
-      <div class="col">
-        <div class="form-floating mb-3">
-          <select class="form-control" v-model="selectType">
-            <option value="" disabled>選擇主類別</option>
-            <option v-for="type in productTypes" :value="type.id" :key="type.id">{{type.typeName}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-floating mb-3">
-        <input v-model="subTypeName" type="text" class="form-control"  placeholder="子類別名稱">
-        <label for="productName">子類別名稱</label>
-      </div>
-    </form>
 
-    <!--    主類別新增-->
-    <form v-else>
-      <div class="form-floating mb-3">
-        <input v-model="typeName" type="text" class="form-control"  placeholder="主類別名稱">
-        <label for="productName">主類別名稱</label>
-      </div>
-    </form>
-    <div class="row mb-4">
-      <button @click.prevent="changeSubType" class="btn btn-outline-primary ">{{typeChangeButton}}</button>
-    </div>
-  </window-modal>
-</template>
 
 <style scoped>
 

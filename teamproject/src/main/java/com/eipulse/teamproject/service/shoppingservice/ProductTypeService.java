@@ -1,11 +1,16 @@
 package com.eipulse.teamproject.service.shoppingservice;
 
+import com.eipulse.teamproject.dto.shoppingdto.ProductDTO;
+import com.eipulse.teamproject.entity.shoppingentity.Product;
 import com.eipulse.teamproject.entity.shoppingentity.ProductType;
+import com.eipulse.teamproject.entity.shoppingentity.SubType;
 import com.eipulse.teamproject.repository.shoppingrepository.ProductTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductTypeService {
@@ -41,7 +46,7 @@ public class ProductTypeService {
 
     //查詢所有主類別關聯
     public List<ProductType> findAllProductType(){
-        return productTypeRepository.findAll();
+       return productTypeRepository.findAll();
     }
 
     //更新主類別名

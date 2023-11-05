@@ -18,32 +18,19 @@ public class CartItemController {
     }
 
     @PostMapping("/cartItem")
-    public ResponseEntity<?> saveCartItem(@RequestBody CartItemDTO cartItemDTO){
-        try{
-            return new ResponseEntity<>(cartItemService.saveCartItem(cartItemDTO), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> saveCartItem(@RequestBody CartItemDTO cartItemDTO) {
+        return new ResponseEntity<>(cartItemService.saveCartItem(cartItemDTO), HttpStatus.OK);
     }
+
     @PutMapping("/cartItem")
-    public ResponseEntity<?> putCartItem(@RequestBody CartItemDTO cartItemDTO){
-        try{
-            cartItemService.updateCartItem(cartItemDTO);
-            return new ResponseEntity<>( HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> putCartItem(@RequestBody CartItemDTO cartItemDTO) {
+        cartItemService.updateCartItem(cartItemDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/cartItem/{cartItemId}")
-    public ResponseEntity<?> deleteCartItem(@PathVariable Integer cartItemId){
-        try{
-            cartItemService.removeCartItem(cartItemId);
-            return new ResponseEntity<>( HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> deleteCartItem(@PathVariable Integer cartItemId) {
+        cartItemService.removeCartItem(cartItemId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

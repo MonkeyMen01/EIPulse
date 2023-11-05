@@ -1,5 +1,4 @@
 package com.eipulse.teamproject.entity.shoppingentity;
-
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;

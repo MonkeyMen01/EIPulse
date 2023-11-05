@@ -1,13 +1,11 @@
 package com.eipulse.teamproject.entity.shoppingentity;
 
-import com.eipulse.teamproject.dto.shoppingdto.CartDTO;
-import com.eipulse.teamproject.entity.Employee;
+import com.eipulse.teamproject.entity.employee.Employee;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -29,9 +27,6 @@ public class Order {
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employee;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_gift_cash_id")
-    private EmployeeGiftCash employeeGiftCash;
 
     @Column(name = "total_price")
     private Integer totalPrice;

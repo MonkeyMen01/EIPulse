@@ -1,63 +1,10 @@
-<script>
-import axios from "axios";
-import login from "../../views/Login.vue";
-
-export default {
-  data() {
-    return {
-      productTypes: [],
-      selectTypeId:"",
-      product: {
-        productName: '',
-        subTypeId: "",
-        description: '',
-        price: 0,
-        stockQuantity: 0,
-        imageUrl: '',
-        status:'',
-      },
-    }
-  },
-  methods: {
-    productSave() {
-      console.log(this.product)
-      this.$emit('product-update', this.product);
-    }
-  },
-  computed:{
-    selectType(){
-      console.log(this.selectTypeId)
-      return this.productTypes.find(type=>type.id === this.selectTypeId) ||{};
-    },
-  },
-  watch:{
-    selectType(newType){
-      if(newType.subTypes && newType.subTypes.length > 0){
-        this.product.subTypeId = newType.subTypes[0].id;
-      }else {
-        this.product.subTypeId="";
-      }
-    }
-  },
-   mounted() {
-     axios.get('http://localhost:8090/eipulse/productTypes').then(response=>{
-       this.productTypes = response.data;
-       console.log(this.productTypes)
-     }).catch((e)=>{
-       console.log(e)
-     })
-  },
-  name: 'ProductForm'
-}
-</script>
-
 <template>
   <div class="row">
     <div class="col">
       <div class="form-floating mb-3">
         <select class="form-control" v-model="selectTypeId">
           <option value="" disabled>選擇主類別</option>
-          <option v-for="type in productTypes" :value="type.id" :key="type.id">{{type.typeName}}</option>
+          <option v-for="type in productTypes" :value="type.id" :key="type.id">{{type.typeName}} </option>
         </select>
       </div>
     </div>
@@ -112,6 +59,60 @@ export default {
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+import login from "../../views/Login.vue";
+
+export default {
+  data() {
+    return {
+      productTypes: [],
+      selectTypeId:"",
+      product: {
+        productName: '',
+        subTypeId: "",
+        description: '',
+        price: 0,
+        stockQuantity: 0,
+        imageUrl: '',
+        status:'',
+      },
+    }
+  },
+  methods: {
+    productSave() {
+      console.log(this.product)
+      this.$emit('product-update', this.product);
+    }
+  },
+  computed:{
+    selectType(){
+      console.log(this.selectTypeId)
+      return this.productTypes.find(type=>type.id === this.selectTypeId) ||{};
+    },
+  },
+  watch:{
+    selectType(newType){
+      if(newType.subTypes && newType.subTypes.length > 0){
+        this.product.subTypeId = newType.subTypes[0].id;
+      }else {
+        this.product.subTypeId="";
+      }
+    }
+  },
+   mounted() {
+     axios.get('http://localhost:8090/eipulse/productTypes').then(response=>{
+       this.productTypes = response.data;
+       console.log(this.productTypes)
+     }).catch((e)=>{
+       console.log(e)
+     })
+  },
+  name: 'ProductForm'
+}
+</script>
+
 
 <style scoped>
 

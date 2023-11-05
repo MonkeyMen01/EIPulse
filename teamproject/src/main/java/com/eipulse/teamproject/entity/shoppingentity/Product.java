@@ -2,8 +2,6 @@ package com.eipulse.teamproject.entity.shoppingentity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +13,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "product")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +61,6 @@ public class Product {
         this.stockQuantity = stockQuantity;
         this.imageUrl = imageUrl;
     }
-//putData
     public Product(Integer id, String productName, SubType subType, String description, Integer price, Integer stockQuantity, String imageUrl) {
         this.id = id;
         this.productName = productName;

@@ -20,12 +20,7 @@ public class CartController {
     }
 
     @GetMapping("/cart/{empId}")
-    public ResponseEntity<?> getCart(@PathVariable Integer empId){
-        try{
-            CartDTO cart = cartService.findOrCreateShoppingCartByEmpId(empId);
-            return new ResponseEntity<>(cart,HttpStatus.OK);
-        }catch (RuntimeException e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> getCart(@PathVariable Integer empId) {
+        return new ResponseEntity<>(cartService.findOrCreateShoppingCartByEmpId(empId), HttpStatus.OK);
     }
 }

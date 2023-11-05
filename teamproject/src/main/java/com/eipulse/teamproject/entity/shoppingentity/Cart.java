@@ -1,6 +1,6 @@
 package com.eipulse.teamproject.entity.shoppingentity;
 
-import com.eipulse.teamproject.entity.Employee;
+import com.eipulse.teamproject.entity.employee.Employee;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -42,7 +42,5 @@ public class Cart {
     public Cart(Employee employee) {
         this.employee = employee;
     }
-    //    Map<String,<String>>
-
 
 }

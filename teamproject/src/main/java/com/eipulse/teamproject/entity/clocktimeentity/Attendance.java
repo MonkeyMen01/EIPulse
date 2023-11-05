@@ -1,6 +1,6 @@
 package com.eipulse.teamproject.entity.clocktimeentity;
 
-import com.eipulse.teamproject.entity.Employee;
+import com.eipulse.teamproject.entity.employee.Employee;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;

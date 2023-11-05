@@ -33,75 +33,40 @@ public class OrderController {
     }
 
     @PostMapping("/order/ecPlay")
-    public ResponseEntity<?> ecPlayOrder(@RequestBody CartDTO cartDTO){
-        try{
-            return new ResponseEntity<>(orderService.ecPlayForm(cartDTO),HttpStatus.OK);
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> ecPlayOrder(@RequestBody CartDTO cartDTO) {
+        return new ResponseEntity<>(orderService.ecPlayForm(cartDTO), HttpStatus.OK);
     }
 
 
     @PostMapping("/ecPlay/success")
-    public ResponseEntity<?> PlaySuccess(){
-        System.out.println("付款成功");
-        try{
-            System.out.println("付款成功");
-            return new ResponseEntity<>("付款成功",HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("付款失敗");
-            return new ResponseEntity<>("付款失敗",HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> PlaySuccess() {
+        return new ResponseEntity<>("付款成功", HttpStatus.OK);
     }
+
     @GetMapping("/order/{empId}")
-    public ResponseEntity<?> findByEmpOrder(@PathVariable Integer empId){
-        try{
-            return new ResponseEntity<>(orderService.findOrderByEmp(empId), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> findByEmpOrder(@PathVariable Integer empId) {
+        return new ResponseEntity<>(orderService.findOrderByEmp(empId), HttpStatus.OK);
     }
+
     @GetMapping("/order/details/{empId}")
-    public ResponseEntity<?> findByLastOrder(@PathVariable Integer empId){
-        try{
-            return new ResponseEntity<>(orderService.findByEmpLastOrder(empId), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> findByLastOrder(@PathVariable Integer empId) {
+        return new ResponseEntity<>(orderService.findByEmpLastOrder(empId), HttpStatus.OK);
     }
 
     @GetMapping("/order/item/{orderId}")
-    public ResponseEntity<?> findByOrderId(@PathVariable Integer orderId){
-        try{
-            return new ResponseEntity<>(orderService.findByOrderId(orderId), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> findByOrderId(@PathVariable Integer orderId) {
+        return new ResponseEntity<>(orderService.findByOrderId(orderId), HttpStatus.OK);
     }
+
     @GetMapping("/orders")
-    public ResponseEntity<?> findAllOrder(){
-        try{
-            return new ResponseEntity<>(orderService.findAllOrder(), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> findAllOrder() {
+        return new ResponseEntity<>(orderService.findAllOrder(), HttpStatus.OK);
     }
+
     @PutMapping("/order")
-    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO orderDTO){
-        try{
-            Order order = orderService.findByOrderId(orderDTO.getOrderId());
-            order.setStatus(orderDTO.getStatus());
-            return new ResponseEntity<>(orderService.updateStatus(order), HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO orderDTO) {
+        Order order = orderService.findByOrderId(orderDTO.getOrderId());
+        order.setStatus(orderDTO.getStatus());
+        return new ResponseEntity<>(orderService.updateStatus(order), HttpStatus.OK);
     }
 }

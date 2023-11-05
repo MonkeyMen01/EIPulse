@@ -1,12 +1,16 @@
 package com.eipulse.teamproject.controller.shoppingcontroller;
 
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.eipulse.teamproject.config.SecurityConfig;
 import com.eipulse.teamproject.dto.shoppingdto.ProductDTO;
 import com.eipulse.teamproject.service.shoppingservice.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,70 +19,56 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
+    private SecurityConfig securityConfig;
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,SecurityConfig securityConfig) {
         this.productService = productService;
+        this.securityConfig =securityConfig;
     }
 
     @PostMapping("/product")
-    public ResponseEntity<?>saveProduct(@RequestBody ProductDTO productDTO){
-        if(productDTO!=null){
-            return new ResponseEntity<>(productService.saveProduct(productDTO), HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> saveProduct(@RequestBody ProductDTO productDTO) {
+        return new ResponseEntity<>(productService.saveProduct(productDTO), HttpStatus.OK);
     }
+
     @PostMapping("/products")
     public ResponseEntity<?> saveProducts(@RequestBody List<ProductDTO> productDTOList){
         if(productDTOList.size()>0){
-            return new ResponseEntity<>(productService.saveListProduct(productDTOList),HttpStatus.OK);
+            productService.saveListProduct(productDTOList);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<?> getProduct(@PathVariable Integer id){
-        try{
-            return new ResponseEntity<>(productService.findByIdProduct(id),HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> getProduct(@PathVariable Integer id) {
+        return new ResponseEntity<>(productService.findByIdProduct(id), HttpStatus.OK);
     }
 
+    //查詢全部，用於前台
     @GetMapping("/products")
-    public ResponseEntity<?> getProducts(){
-        try{
-            return new ResponseEntity<>(productService.findAllProduct(),HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> getProducts() {
+        return new ResponseEntity<>(productService.findAllProduct(), HttpStatus.OK);
     }
-
+    //查詢全部，用於後台
+    @GetMapping("/products/{pageNumber}")
+    public ResponseEntity<?> getAllProduct(@PathVariable Integer pageNumber) {
+        return new ResponseEntity<>(productService.findAllAsc(pageNumber), HttpStatus.OK);
+    }
     @PutMapping("/product")
-    public ResponseEntity<?> putProduct(@RequestBody ProductDTO productDTO){
-        try{
-            return new ResponseEntity<>(productService.updateProduct(productDTO),HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> putProduct(@RequestBody ProductDTO productDTO) {
+        return new ResponseEntity<>(productService.updateProduct(productDTO), HttpStatus.OK);
     }
 
     @PutMapping("/product/status")
-    public ResponseEntity<?> putStatus(@RequestBody ProductDTO productDTO){
-        try{
-            productService.changeStatus(productDTO);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> putStatus(@RequestBody ProductDTO productDTO) {
+        productService.changeStatus(productDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/product/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Integer id){
-        try{
-            return new ResponseEntity<>(productService.deleteProductById(id),HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
+        return new ResponseEntity<>(productService.deleteProductById(id), HttpStatus.OK);
     }
 }
